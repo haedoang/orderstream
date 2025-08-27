@@ -8,7 +8,6 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
 }
 
-
 ktlint {
     reporters {
         reporter(ReporterType.JSON)
@@ -27,8 +26,6 @@ allprojects {
 subprojects {
     apply(plugin = "kotlin")
     apply(plugin = "kotlin-spring")
-    apply(plugin = "org.springframework.boot")
-    apply(plugin = "io.spring.dependency-management")
 
     java {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -46,16 +43,11 @@ subprojects {
     }
 
     dependencies {
-        implementation("org.springframework.boot:spring-boot-starter")
-        implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("org.jetbrains.kotlin:kotlin-reflect")
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
         implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-        testImplementation("org.springframework.boot:spring-boot-starter-test")
         testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-
-        annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
@@ -68,4 +60,24 @@ subprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
     }
+}
+
+listOf(":order", ":stock", ":delivery", ":return").forEach { moduleName ->
+    project(moduleName) {
+        apply(plugin = "org.springframework.boot")
+        apply(plugin = "io.spring.dependency-management")
+
+        dependencies {
+            implementation("org.springframework.boot:spring-boot-starter-web")
+            testImplementation("org.springframework.boot:spring-boot-starter-test")
+        }
+    }
+}
+
+tasks.bootJar {
+    enabled = false
+}
+
+tasks.jar {
+    enabled = false
 }

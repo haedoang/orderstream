@@ -1,22 +1,18 @@
 plugins {
-    kotlin("jvm")
-}
-
-group = "io.readingrecord"
-version = "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter")
     api("org.springframework.kafka:spring-kafka")
     testImplementation(kotlin("test"))
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.bootJar {
+    enabled = false
 }
-kotlin {
-    jvmToolchain(17)
+
+tasks.jar {
+    enabled = true
 }
