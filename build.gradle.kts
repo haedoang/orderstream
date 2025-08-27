@@ -1,4 +1,5 @@
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     kotlin("jvm") version "1.9.10"
@@ -60,6 +61,10 @@ subprojects {
     tasks.withType<Test> {
         useJUnitPlatform()
     }
+
+    tasks.named<Jar>("jar") {
+        enabled = false
+    }
 }
 
 listOf(":order", ":stock", ":delivery", ":return").forEach { moduleName ->
@@ -74,10 +79,10 @@ listOf(":order", ":stock", ":delivery", ":return").forEach { moduleName ->
     }
 }
 
-tasks.bootJar {
+tasks.named<Jar>("jar") {
     enabled = false
 }
 
-tasks.jar {
+tasks.named<BootJar>("bootJar") {
     enabled = false
 }

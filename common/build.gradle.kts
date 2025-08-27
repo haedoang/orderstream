@@ -1,18 +1,19 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
 }
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter")
     api("org.springframework.kafka:spring-kafka")
     testImplementation(kotlin("test"))
 }
 
-tasks.bootJar {
-    enabled = false
+tasks.named<Jar>("jar") {
+    enabled = true
 }
 
-tasks.jar {
-    enabled = true
+tasks.named<BootJar>("bootJar") {
+    enabled = false
 }

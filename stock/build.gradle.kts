@@ -3,6 +3,6 @@ dependencies {
 }
 
 tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-    mainClass.set("io.readingrecord.order.StockApplication")
+    mainClass.set("io.readingrecord.order.StockApplicationKt")
 }
 

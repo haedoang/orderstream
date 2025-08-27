@@ -3,5 +3,5 @@ dependencies {
 }
 
 tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-    mainClass.set("io.readingrecord.order.OrderApplication")
+    mainClass.set("io.readingrecord.order.OrderApplicationKt")
 }
