@@ -7,7 +7,7 @@ dependencies {
     implementation("org.jooq:jooq-meta")
 
     // h2
-    testImplementation("com.h2database:h2")
+    implementation("com.h2database:h2")
 
     testImplementation(kotlin("test"))
 }
