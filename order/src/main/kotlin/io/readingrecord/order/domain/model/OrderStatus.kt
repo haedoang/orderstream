@@ -1,4 +1,4 @@
-package io.readingrecord.order.domain
+package io.readingrecord.order.domain.model
 
 enum class OrderStatus(
     private val displayName: String,
