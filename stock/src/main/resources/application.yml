@@ -1,5 +1,28 @@
 spring:
   application:
     name: stock
-server:
-  port: 9002
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3309/orderstream
+    username: root
+    password: root
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    consumer:
+#      group-id: stock-service
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      properties:
+#        spring.json.trusted.packages: "io.readingrecord.*"
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+#server:
+#  port: 9002
+
+#logging:
+#  level:
+#    io.readingrecord.stock: DEBUG
+#    org.springframework.kafka: INFO
