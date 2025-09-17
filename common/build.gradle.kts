@@ -7,6 +7,8 @@ plugins {
 
 dependencies {
     api("org.springframework.kafka:spring-kafka")
+    api("org.springframework.boot:spring-boot-starter-web")
+    api("org.springframework.boot:spring-boot-starter-test")
     testImplementation(kotlin("test"))
 }
 

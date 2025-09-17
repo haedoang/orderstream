@@ -1,0 +1,4 @@
+# Slack Configuration
+slack:
+  bot-token: "${SLACK_BOT_TOKEN:}" # 환경변수 주입
+  api-url: https://slack.com/api

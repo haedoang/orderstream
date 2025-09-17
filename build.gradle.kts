@@ -71,11 +71,6 @@ listOf(":order", ":stock", ":delivery", ":return").forEach { moduleName ->
     project(moduleName) {
         apply(plugin = "org.springframework.boot")
         apply(plugin = "io.spring.dependency-management")
-
-        dependencies {
-            implementation("org.springframework.boot:spring-boot-starter-web")
-            testImplementation("org.springframework.boot:spring-boot-starter-test")
-        }
     }
 }
 
