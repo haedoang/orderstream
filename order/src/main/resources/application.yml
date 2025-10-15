@@ -19,6 +19,8 @@ spring:
       schema-locations: classpath*:db/${database}/schema.sql
       data-locations: classpath*:db/${database}/data.sql
       mode: always
+  kafka:
+    bootstrap-servers: localhost:9094
 
 logging:
   level:

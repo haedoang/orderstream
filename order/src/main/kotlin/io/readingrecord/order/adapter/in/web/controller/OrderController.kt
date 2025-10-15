@@ -1,6 +1,6 @@
 package io.readingrecord.order.adapter.`in`.web.controller
 
-import io.readingrecord.order.adapter.`in`.web.OrderRequestDto
+import io.readingrecord.order.adapter.`in`.web.dto.OrderRequestDto
 import io.readingrecord.order.adapter.`in`.web.dto.OrderResponseDto
 import io.readingrecord.order.application.port.`in`.OrderUseCase
 import io.readingrecord.order.domain.command.UpdateOrderStatusCommand
@@ -26,7 +26,7 @@ class OrderController(
     fun createOrder(@RequestBody orderRequest: OrderRequestDto): ResponseEntity<OrderResponseDto> {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(OrderResponseDto.from(orderUseCase.createOrder(orderRequest.toCommand())))
+            .body(OrderResponseDto.from(orderUseCase.placeOrder(orderRequest.toCommand())))
     }
 
     @GetMapping("/{orderId}")
