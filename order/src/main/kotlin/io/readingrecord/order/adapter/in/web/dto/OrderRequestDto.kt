@@ -1,10 +1,7 @@
-package io.readingrecord.order.adapter.`in`.web
+package io.readingrecord.order.adapter.`in`.web.dto
 
-import io.readingrecord.order.domain.command.CreateOrderCommand
-import io.readingrecord.order.domain.model.Order
-import io.readingrecord.order.domain.model.OrderStatus
+import io.readingrecord.order.domain.command.PlaceOrderCommand
 import java.math.BigDecimal
-import java.time.LocalDateTime
 
 data class OrderRequestDto(
     val customerId: Long,
@@ -12,20 +9,8 @@ data class OrderRequestDto(
     val quantity: Int,
     val unitPrice: BigDecimal
 ) {
-    fun toOrder(): Order {
-        return Order(
-            customerId = customerId,
-            productId = productId,
-            quantity = quantity,
-            unitPrice = unitPrice,
-            totalAmount = unitPrice.multiply(BigDecimal(quantity)),
-            status = OrderStatus.ORDER_PLACED,
-            createdAt = LocalDateTime.now(),
-            updatedAt = LocalDateTime.now()
-        )
-    }
 
-    fun toCommand(): CreateOrderCommand {
-        return CreateOrderCommand(customerId, productId, quantity, unitPrice)
+    fun toCommand(): PlaceOrderCommand {
+        return PlaceOrderCommand(customerId, productId, quantity, unitPrice)
     }
 }

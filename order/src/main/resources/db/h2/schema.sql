@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS TB_ORDER;
 
 CREATE TABLE TB_ORDER (
                         id BIGINT PRIMARY KEY AUTO_INCREMENT,
+                        saga_id VARCHAR(36) NOT NULL UNIQUE,
                         customer_id BIGINT NOT NULL,
                         product_id BIGINT NOT NULL,
                         quantity INT NOT NULL,
