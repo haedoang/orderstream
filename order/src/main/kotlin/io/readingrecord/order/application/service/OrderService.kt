@@ -2,35 +2,29 @@ package io.readingrecord.order.application.service
 
 import io.readingrecord.order.application.exception.OrderNotFoundException
 import io.readingrecord.order.application.exception.OrderUpdateFailedException
-import io.readingrecord.order.domain.command.CreateOrderCommand
+import io.readingrecord.order.application.port.`in`.OrderUseCase
+import io.readingrecord.order.application.port.out.OrderEventPublisher
+import io.readingrecord.order.application.port.out.OrderPersistencePort
+import io.readingrecord.order.domain.command.PlaceOrderCommand
 import io.readingrecord.order.domain.command.UpdateOrderStatusCommand
 import io.readingrecord.order.domain.model.Order
-import io.readingrecord.order.domain.model.OrderStatus
-import io.readingrecord.order.application.port.`in`.OrderUseCase
-import io.readingrecord.order.application.port.out.OrderPersistencePort
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
 class OrderService(
-    private val orderPersistencePort: OrderPersistencePort
+    private val orderPersistencePort: OrderPersistencePort,
+    private val orderEventPublisher: OrderEventPublisher
 ) : OrderUseCase {
 
-    override fun createOrder(command: CreateOrderCommand): Order {
-        val order = Order(
-            customerId = command.customerId,
-            productId = command.productId,
-            quantity = command.quantity,
-            unitPrice = command.unitPrice,
-            totalAmount = command.calculateTotalAmount(),
-            status = OrderStatus.ORDER_PLACED
-        )
+    override fun placeOrder(command: PlaceOrderCommand): Order {
+        val order = command.toPlaceOrder()
 
         val savedOrder = orderPersistencePort.save(order)
 
-        //TODO 주문 생성 이벤트 발행(사가 패턴)
-
+        val orderPlacedEvent = savedOrder.toOrderPlacedEvent()
+        orderEventPublisher.publishOrderPlacedEvent(orderPlacedEvent)
         return savedOrder
     }
 

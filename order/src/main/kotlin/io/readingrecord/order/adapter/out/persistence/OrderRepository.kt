@@ -25,6 +25,7 @@ class OrderRepository(
 
     private fun insertOrder(order: Order): Order {
         val record = dsl.insertInto(TB_ORDER)
+            .set(TB_ORDER.SAGA_ID, order.sagaId)
             .set(TB_ORDER.CUSTOMER_ID, order.customerId)
             .set(TB_ORDER.PRODUCT_ID, order.productId)
             .set(TB_ORDER.QUANTITY, order.quantity)
@@ -78,6 +79,7 @@ class OrderRepository(
     private fun mapToOrder(record: Record): Order {
         return Order(
             id = record.get(TB_ORDER.ID),
+            sagaId = record.get(TB_ORDER.SAGA_ID),
             customerId = record.get(TB_ORDER.CUSTOMER_ID),
             productId = record.get(TB_ORDER.PRODUCT_ID),
             quantity = record.get(TB_ORDER.QUANTITY),
