@@ -6,10 +6,12 @@ plugins {
 
 dependencies {
     implementation(project(":common"))
-    runtimeOnly("com.mysql:mysql-connector-j")
+    implementation("com.h2database:h2")
     implementation("org.springframework.boot:spring-boot-starter-jooq")
+    implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.springframework.boot:spring-boot-starter-web")
 
-    jooqGenerator("com.mysql:mysql-connector-j")
+    jooqGenerator("com.h2database:h2")
 }
 
 sourceSets {
@@ -29,17 +31,17 @@ jooq {
             jooqConfiguration.apply {
                 logging = Logging.WARN
                 jdbc.apply {
-                    driver = "com.mysql.cj.jdbc.Driver"
-                    url = "jdbc:mysql://localhost:3309/orderstream"
-                    user = "root"
-                    password = "root"
+                    driver = "org.h2.Driver"
+                    url = "jdbc:h2:mem:testdb;INIT=RUNSCRIPT FROM 'src/main/resources/schema.sql'"
+                    user = "sa"
+                    password = ""
                 }
                 generator.apply {
                     name = "org.jooq.codegen.DefaultGenerator"
                     database.apply {
-                        name = "org.jooq.meta.mysql.MySQLDatabase"
-                        inputSchema = "orderstream"
-                        includes = "stock"
+                        name = "org.jooq.meta.h2.H2Database"
+                        inputSchema = "PUBLIC"
+                        includes = "STOCK"
                     }
                     generate.apply {
                         isDeprecated = false
