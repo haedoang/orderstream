@@ -1,10 +1,12 @@
 server:
   port: 9001
+database: h2
+
 spring:
   application:
     name: order
   datasource:
-    url: jdbc:h2:mem:orderdb;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    url: jdbc:h2:mem:orderdb;
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -12,6 +14,13 @@ spring:
     console:
       enabled: true
       path: /h2-console
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
+  sql:
+    init:
+      schema-locations: classpath*:db/${database}/schema.sql
+      data-locations: classpath*:db/${database}/data.sql
+      mode: always
+
+logging:
+  level:
+    org.jooq: DEBUG
+    org.springframework.jdbc: DEBUG

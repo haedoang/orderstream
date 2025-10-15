@@ -1,4 +1,4 @@
-package io.readingrecord.order.domain
+package io.readingrecord.order.domain.model
 
 import java.math.BigDecimal
 import java.time.LocalDateTime

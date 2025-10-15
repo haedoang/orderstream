@@ -1,0 +1,25 @@
+@startuml
+actor User
+participant "Order Service" as Order
+participant "Stock Service" as Stock
+participant "Delivery Service" as Delivery
+
+User -> Order: 주문 요청
+Order -> Kafka: ORDER_CREATED 이벤트 발행
+Kafka -> Stock: 주문 생성 이벤트 수신
+
+Stock -> Stock: 재고 확인
+Stock -> Kafka: STOCK_RESERVED / STOCK_FAILED 발행
+
+Kafka -> Order: 재고 처리 결과 수신
+alt 재고 성공
+    Order -> Kafka: ORDER_CONFIRMED 발행
+    Kafka -> Delivery: 주문확정 이벤트 수신
+    Delivery -> Kafka: DELIVERY_REQUESTED 발행
+    Kafka -> Order: 배송 요청 이벤트 수신
+    Order -> Order: 주문 상태 = "배송중"
+else 재고 실패
+    Order -> Kafka: ORDER_REJECTED 발행
+    Order -> Order: 주문 상태 = "취소"
+end
+@enduml

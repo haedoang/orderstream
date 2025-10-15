@@ -1,0 +1,22 @@
+@startuml
+actor User
+participant "Return Service" as Return
+participant "Delivery Service" as Delivery
+participant "Stock Service" as Stock
+participant "Order Service" as Order
+
+User -> Return: 반품 요청
+Return -> Kafka: RETURN_REQUESTED 이벤트 발행
+Kafka -> Order: 반품 요청 이벤트 수신
+Order -> Order: 주문 상태 = "반품신청"
+
+Kafka -> Delivery: 반품 요청 이벤트 수신
+Delivery -> Kafka: RETURN_PICKUP_CONFIRMED 발행
+Kafka -> Stock: 반품 배송 완료 이벤트 수신
+
+Stock -> Stock: 재고 복구 처리
+Stock -> Kafka: INVENTORY_RESTOCKED 발행
+
+Kafka -> Order: 재고 복구 결과 수신
+Order -> Order: 주문 상태 = "반품완료"
+@enduml

@@ -67,6 +67,12 @@
    - 재고 서비스: 반품 이벤트 구독 → 재고 업데이트
    - 알림 서비스: 반품 처리 이벤트 구독 → 고객 알림 발송
 
+## 이벤트 시퀀스 다이어그램 (Event Sequence Diagram)
+  - order  
+    ![order](doc/order.svg)
+  - return  
+    ![return](doc/return.svg)
+
 ## 기술 스택
 
 - **언어**: Kotlin
